@@ -1,17 +1,38 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from 'react-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { LocalizationProvider } from '@mui/x-date-pickers'; // Import the LocalizationProvider
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'; // Import the adapter
+import DataTable from './components/DataTable'; // Your DataTable component
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// Create a theme with custom configurations
+const theme = createTheme({
+  palette: {
+    mode: 'light', // or 'dark'
+    background: {
+      default: '#f5f5f5',
+      paper: '#ffffff',
+    },
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+  },
+});
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      {/* CssBaseline ensures consistent baseline styling */}
+      <CssBaseline />
+      <LocalizationProvider dateAdapter={AdapterDateFns}> {/* Wrap your component */}
+        <DataTable />
+      </LocalizationProvider>
+    </ThemeProvider>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
